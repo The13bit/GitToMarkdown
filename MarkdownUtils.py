@@ -1,0 +1,20 @@
+import json
+class Markdown:
+    EXT_MAP=json.load(open("./extensions.json","r"))["ext"]
+    def __init__(self,filename) -> None:
+        self.handle=open(filename,'a',encoding='utf-8')
+
+
+    def add_header(self,content,level=1):
+        if level>6:
+            raise ValueError("Header level must be between 1 and 6.")
+        self.handle.write("#"*level +" "+content+"\n")
+    def add_code_block(self,content,fileext):
+        ext=''
+        if fileext.lower() in self.EXT_MAP:
+                ext=self.EXT_MAP[fileext.lower()]
+        ctx=f'''\n```{ext}\n{content}\n```\n'''
+        self.handle.write(ctx)
+    def add_para(self,content):
+        self.handle.write(content)
+        
