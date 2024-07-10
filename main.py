@@ -6,7 +6,7 @@ from Utils import GitToMark
 
 
 #repo=Utils("https://github.com/gitpython-developers/QuickStartTutorialFiles.git")
-repo=GitToMark("https://github.com/expressjs/express.git")
+repo=GitToMark(["https://github.com/expressjs/express.git","https://github.com/gitpython-developers/QuickStartTutorialFiles.git"])
 
-repo.Generate_MD
+repo.generate
 
