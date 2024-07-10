@@ -5,6 +5,7 @@ import os
 
 from MarkdownUtils import Markdown
 from ProgressBar import ClonedProgreeBar
+from Zipper import Zipper
 
 from sys import stdout
 
@@ -15,7 +16,7 @@ class Generator:
         self.repoName=reponame
         self.repo=repo
         self.tree=repo.head.commit.tree
-        self.MDout="./"+self.OUT_DIR+"/"+outfile+".md"
+        self.MDout="./"+self.OUT_DIR+"/"+reponame+".md"
         self.MD=Markdown(self.MDout)
         self.total=0
         self.dirs=0
@@ -81,8 +82,9 @@ class GitToMark:
         self.UID=[self.generate_random_file_string(url) for url in self.urls]
         self.repo=[self.Create_repo_Handle(url,i) for i,url in enumerate(self.urls)]
         
-   
-        
+    @property
+    def store(self):
+        Zipper(self.UID)    
     
     
     def generate_random_file_string(self,path):
