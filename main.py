@@ -1,9 +1,10 @@
 from git import Repo
 import os
-from gittomarkdown import GitToMark
+from GitToMarkDown import GitToMark
 
+GitToMark.config(10,"C:\\Users\\anasf\\.ssh\\github")
 
 # repo=Utils("https://github.com/gitpython-developers/QuickStartTutorialFiles.git")
-repo = GitToMark.from_json("./Scraper/firstscrape/tmp/github.jsonl")
+repo = GitToMark("git@github.com:nopnop2002/esp-idf-w25q64.git",True)
 
 repo.generate

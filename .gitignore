@@ -3,6 +3,7 @@ RepoStore/
 Zips/
 Scraper/
 *.md
+.vscode/
 __*
 *.txt
 Testing.py

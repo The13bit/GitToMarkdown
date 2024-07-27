@@ -17,7 +17,8 @@ class Generator:
         self.MD = Markdown(self.MDout)
         self.total = 0
         self.dirs = 0
-        if not os.path.exists(self.OUT_DIR + "/" + self.repoName + ".md"):
+        if not os.path.exists(self.OUT_DIR + "/" + self.repoName + ".md") or (os.path.exists(self.OUT_DIR + "/" + self.repoName + ".md") and os.stat(self.OUT_DIR + "/" + self.repoName + ".md").st_size == 0):
+            
             self.pbar = tqdm(
                 position=i,
                 desc=f"Processing:{reponame}",
@@ -84,11 +85,12 @@ class Generator:
         self.MD.add_header(self.repoName.replace("-", "/"))
 
     def Generate_MD(self):
-        if os.path.exists(self.OUT_DIR + "/" + self.repoName + ".md"):
+        if os.path.exists(self.OUT_DIR + "/" + self.repoName + ".md") and os.stat(self.OUT_DIR + "/" + self.repoName + ".md").st_size != 0:
             print(f"{self.repoName} Already Exists")
             return
         self.write_header()
         self.write_git_tree()
+        
         self.write_files_in_MD(self.tree)
 
     def print_tree(self):
