@@ -10,6 +10,8 @@ from ProgressBar import ClonedProgreeBar
 from Zipper import Zipper
 from Generator import Generator
 
+from Parsers import extract_git_links_xml,extract_git_links_json
+
 
 class GitToMark:
     BASE_DIR = "./RepoStore"
@@ -27,6 +29,14 @@ class GitToMark:
             ):
                 if r:
                     self.repo.append(r)
+    @classmethod
+    def from_xml(cls,path):
+        links=extract_git_links_xml(path)
+        return cls(links)
+    @classmethod
+    def from_json(cls,path):
+        links=extract_git_links_json(path)
+        return cls(links)
 
     @property
     def store(self):
