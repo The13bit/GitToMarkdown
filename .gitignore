@@ -1,6 +1,8 @@
 Output
 RepoStore/
 Zips/
+Scraper/
 *.md
 __*
 *.txt
+Testing.py
