@@ -1,9 +1,10 @@
 import json
 import os
-
-
+from pathlib import Path
+import pkg_resources
 class Markdown:
-    EXT_MAP = json.load(open("./extensions.json", "r"))["ext"]
+    
+    EXT_MAP =json.load( open(pkg_resources.resource_filename('GitToMarkdown',"extensions.json"),"r"))
 
     def __init__(self, filename) -> None:
         if not os.path.exists("./Output"):

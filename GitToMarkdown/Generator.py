@@ -2,23 +2,25 @@ from sys import stdout
 import os, platform
 from git import Repo
 from tqdm import tqdm
-from MarkdownUtils import Markdown
+from .MarkdownUtils import Markdown
+import pathlib
+import os
 
 
 class Generator:
     BASE_DIR = "./RepoStore"
-    OUT_DIR = "./Output"
+    OUT_DIR = pathlib.Path("Output")
 
     def __init__(self, reponame: str, repo: Repo, outfile: str, i):
+        self.out_dir = pathlib.Path(os.getcwd()) / self.OUT_DIR
         self.repoName = reponame
         self.repo = repo
         self.tree = repo.head.commit.tree
-        self.MDout = "./" + self.OUT_DIR + "/" + reponame + ".md"
+        self.MDout = str(self.out_dir / f"{reponame}.md")
         self.MD = Markdown(self.MDout)
         self.total = 0
         self.dirs = 0
-        if not os.path.exists(self.OUT_DIR + "/" + self.repoName + ".md") or (os.path.exists(self.OUT_DIR + "/" + self.repoName + ".md") and os.stat(self.OUT_DIR + "/" + self.repoName + ".md").st_size == 0):
-            
+        if  os.stat(self.OUT_DIR / f"{self.repoName}.md").st_size == 0:
             self.pbar = tqdm(
                 position=i,
                 desc=f"Processing:{reponame}",
@@ -31,7 +33,7 @@ class Generator:
             # print(f'{"-" * 4 * level}| {entry.path}, {entry.type}')
             self.total += 1
 
-            tmp = f'{" "*level*2}- {entry.path}' + "\n"
+            tmp = f"{' ' * level * 2}- {entry.path}" + "\n"
 
             yield tmp
             if entry.type == "tree":
@@ -85,12 +87,15 @@ class Generator:
         self.MD.add_header(self.repoName.replace("-", "/"))
 
     def Generate_MD(self):
-        if os.path.exists(self.OUT_DIR + "/" + self.repoName + ".md") and os.stat(self.OUT_DIR + "/" + self.repoName + ".md").st_size != 0:
+        if (
+            os.path.exists(self.OUT_DIR / f"{self.repoName}.md")
+            and os.stat(self.OUT_DIR / f"{self.repoName}.md").st_size != 0
+        ):
             print(f"{self.repoName} Already Exists")
             return
         self.write_header()
         self.write_git_tree()
-        
+
         self.write_files_in_MD(self.tree)
 
     def print_tree(self):

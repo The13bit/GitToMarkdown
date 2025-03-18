@@ -17,6 +17,12 @@ def extract_git_links_xml(path):
 
     return links
 
+def extract_links_lineby_line(path):
+    with open(path,"r") as f:
+        file=f.readlines()
+    
+    return list(file)
+
 
 def extract_git_links_json(path):
     def search(doc, links):
