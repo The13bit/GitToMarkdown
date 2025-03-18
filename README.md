@@ -15,7 +15,7 @@ A Python tool that automatically generates Markdown documentation from Git repos
 ## Installation
 
 ```bash
-pip install gittomarkdown==1.0.0
+pip install gittomarkdown
 ```
 
 ## Usage
